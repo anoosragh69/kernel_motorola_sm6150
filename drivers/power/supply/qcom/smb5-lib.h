@@ -385,6 +385,11 @@ struct smb_iio {
 	struct iio_channel	*smb_temp_chan;
 };
 
+struct mmi_params {
+	bool			factory_mode;
+	bool			demo_mode;
+};
+
 struct smb_charger {
 	struct device		*dev;
 	char			*name;
@@ -617,6 +622,7 @@ struct smb_charger {
 	int			dcin_uv_count;
 	ktime_t			dcin_uv_last_time;
 	int			last_wls_vout;
+	int			wireless_vout;
 	/* GPIO DCIN Supply */
 	int			micro_usb_gpio;
 	int			micro_usb_irq;
@@ -627,6 +633,10 @@ struct smb_charger {
 	int			micro_usb_pre_state;
 	bool			dcin_uusb_over_gpio_en;
 	bool			aicl_disable;
+
+	/* mmi based params */
+	/* Place at end of struct smb_charger as it grows */
+	struct mmi_params	mmi;
 };
 
 int smblib_read(struct smb_charger *chg, u16 addr, u8 *val);
@@ -840,4 +850,7 @@ int smblib_get_qc3_main_icl_offset(struct smb_charger *chg, int *offset_ua);
 
 int smblib_init(struct smb_charger *chg);
 int smblib_deinit(struct smb_charger *chg);
+
+void mmi_init(struct smb_charger *chg);
+void mmi_deinit(struct smb_charger *chg);
 #endif /* __SMB5_CHARGER_H */
