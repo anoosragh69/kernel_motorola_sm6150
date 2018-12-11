@@ -3170,7 +3170,8 @@ static int smb5_init_hw(struct smb5 *chip)
 	 */
 	mask = USBIN_AICL_PERIODIC_RERUN_EN_BIT | USBIN_AICL_ADC_EN_BIT
 			| USBIN_AICL_EN_BIT |
-			SUSPEND_ON_COLLAPSE_USBIN_BIT;
+			SUSPEND_ON_COLLAPSE_USBIN_BIT
+			| USBIN_AICL_HDC_EN_BIT;
 
 	/* Disable AICL if battery is not present. */
 	rc = smblib_get_prop_batt_present(chg, &pval);
